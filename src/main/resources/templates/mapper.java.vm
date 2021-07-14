@@ -1,0 +1,10 @@
+package ${package.Mapper};
+
+import ${package.Entity}.${entity};
+import ${superMapperClassPackage};
+import org.apache.ibatis.annotations.Mapper;
+
+@Mapper
+public interface ${table.mapperName} extends ${superMapperClass}<${entity}> {
+
+}

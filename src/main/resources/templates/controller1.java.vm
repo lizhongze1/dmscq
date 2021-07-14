@@ -1,0 +1,101 @@
+package ${package.Controller};
+
+import java.util.List;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import ${package.Entity}.${entity};
+#if(${restControllerStyle})
+import org.springframework.web.bind.annotation.RestController;
+#else
+import org.springframework.stereotype.Controller;
+#end
+#if(${superControllerClassPackage})
+import ${superControllerClassPackage};
+#end
+import ${package.Service}.${entity}Service;
+
+
+/**
+ *
+ * @ClassName: ${table.controllerName}
+ * @Description: TODO(这里用一句话描述这个类的作用)
+ * @author ${author}
+ * @date ${date}
+ */
+#if(${restControllerStyle})
+@RestController
+#else
+@Controller
+#end
+@RequestMapping(value = "#if(${package.ModuleName})/${package.ModuleName}#end/#if(${controllerMappingHyphenStyle})${controllerMappingHyphen}#else${table.entityPath}#end")
+#if(${superControllerClass})
+public class ${table.controllerName} extends ${superControllerClass}<${entity}> {
+#else
+public class ${table.controllerName} {
+#end
+    @Autowired
+    private ${entity}Service ${table.entityPath}Service;
+
+    /**
+     * 分页查询
+     * @param page
+     * @param ${table.entityPath}
+     */
+    @GetMapping(value = "/queryPageList")
+    public void queryPageList(Page<${entity}> page, ${entity} ${table.entityPath}){
+            Page<${entity}> list= ${table.entityPath}Service.page(page, new QueryWrapper<${entity}>(${table.entityPath}));
+    }
+
+    /**
+     * 增加
+     * @param ${table.entityPath}
+     */
+    @PostMapping(value = "/add")
+    public void add(${entity} ${table.entityPath}){
+        ${table.entityPath}Service.save(${table.entityPath});
+    }
+
+    /**
+     * 更新
+     * @param ${table.entityPath}
+     */
+    @PutMapping(value = "/edit")
+    public void edit(${entity} ${table.entityPath}){
+        ${table.entityPath}Service.updateById(${table.entityPath});
+    }
+
+    /**
+     * 删除
+     * @param id
+     */
+    @DeleteMapping(value = "/delete")
+    public void delete(String id){
+        ${table.entityPath}Service.removeById(id);
+    }
+
+    /**
+     * 详情
+     * @param id
+     */
+    @GetMapping(value = "/detail")
+    public void detail(String id){
+        ${entity} ${table.entityPath} = ${table.entityPath}Service.getById(id);
+    }
+
+    /**
+     * 列表查询
+     * @param ${table.entityPath}
+     */
+    @GetMapping(value = "/queryList")
+    public void queryList(${entity} ${table.entityPath}){
+        QueryWrapper<${entity}> wrapper=new QueryWrapper<${entity}>(${table.entityPath});
+        List<${entity}> list= ${table.entityPath}Service.list(wrapper);
+
+    }
+
+}
