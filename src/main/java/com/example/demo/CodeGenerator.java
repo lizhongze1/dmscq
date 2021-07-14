@@ -95,7 +95,7 @@ public class CodeGenerator {
         // 包配置
         PackageConfig pc = new PackageConfig();
         //  pc.setModuleName(scanner("模块名"));
-        pc.setParent("com.gooagoo.ad");
+        pc.setParent("com.lzz.ad");
         mpg.setPackageInfo(pc);
 
         // 如果模板引擎是 velocity
