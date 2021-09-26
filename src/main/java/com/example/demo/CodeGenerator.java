@@ -68,21 +68,22 @@ public class CodeGenerator {
 
 
 
-        DataSourceConfig dsc = new DataSourceConfig();
-        dsc.setUrl("jdbc:postgresql://172.16.60.11:5432/med_im?currentSchema=med_rule_engine"); //url
+/*        DataSourceConfig dsc = new DataSourceConfig();
+        dsc.setUrl("jdbc:postgresql://172.16.60.11:5432/med_im?currentSchema=med_check_result"); //url
         dsc.setDriverName("org.postgresql.Driver"); //数据库驱动
         dsc.setUsername("postgres");    //用户名
         dsc.setPassword("postgres"); //密码
-        dsc.setDbType(DbType.POSTGRE_SQL);    //数据库类型
+        dsc.setDbType(DbType.POSTGRE_SQL);    //数据库类型*/
+
+        DataSourceConfig dsc = new DataSourceConfig();
+        dsc.setUrl("jdbc:oracle:thin:@172.16.60.11:1521:ORCL"); //url
+        dsc.setDriverName("oracle.jdbc.driver.OracleDriver"); //数据库驱动
+        dsc.setUsername("med_im");    //用户名
+        dsc.setPassword("med_im"); //密码
+        dsc.setDbType(DbType.ORACLE);
+
         mpg.setDataSource(dsc);
 
-/*
-
-        dsc.setUrl("jdbc:postgresql://172.16.50.227:5836/med_im");
-        dsc.setDriverName("org.postgresql.Driver");
-        dsc.setUsername("postgres");
-        dsc.setPassword("postgres");
-        mpg.setDataSource(dsc);*/
 
         // 自定义配置
         InjectionConfig cfg = new InjectionConfig() {
@@ -95,7 +96,7 @@ public class CodeGenerator {
         // 包配置
         PackageConfig pc = new PackageConfig();
         //  pc.setModuleName(scanner("模块名"));
-        pc.setParent("com.lzz.ad");
+        pc.setParent("com.ybdjk.checkupload");
         mpg.setPackageInfo(pc);
 
         // 如果模板引擎是 velocity
@@ -112,16 +113,17 @@ public class CodeGenerator {
                         + "/" + tableInfo.getEntityName() + "Mapper" + StringPool.DOT_XML;
             }
         });
+
         cfg.setFileOutConfigList(focList);
         mpg.setCfg(cfg);
 
         // 配置模板
         TemplateConfig templateConfig = new TemplateConfig();
         templateConfig.setEntity("templates/entity.java");
-        templateConfig.setService("templates/service.java");
-        templateConfig.setController("templates/controller1.java.vm");
-        templateConfig.setMapper("templates/mapper.java");
-        templateConfig.setXml("templates/mapper.xml.vm");
+        templateConfig.setService("templates/service2.java");
+        templateConfig.setController("templates/controller2.java.vm");
+        templateConfig.setMapper("templates/mapper2.java");
+        templateConfig.setXml("templates/mapper2.xml.vm");
         templateConfig.setXml(null);
         mpg.setTemplate(templateConfig);
 
